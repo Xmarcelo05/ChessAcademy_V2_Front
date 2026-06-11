@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChessAcademy - Plataforma y Administración</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo" onclick="cambiarVista('landing')" style="cursor: pointer;">
+                <span class="chess-icon">♛</span>
+                ChessAcademy
+            </div>
+            <nav id="nav-menu">
+                <a href="#introduccion" class="nav-link-landing">Inicio</a>
+                <a href="#tecnicas" class="nav-link-landing">Técnicas</a>
+                <a href="#cursos" class="nav-link-landing">Cursos Activos</a>
+                <button onclick="cambiarVista('admin')" class="btn-admin">
+                    <i class="fas fa-cog"></i> Panel de Administración
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main id="vista-landing">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Domina el <span class="accent">Juego del Rey</span></h1>
+                    <p>Aprende ajedrez desde cero hasta nivel avanzado. Con nuestra metodología probada, miles de estudiantes han mejorado su juego significativamente.</p>
+                    <button class="cta-button" onclick="document.getElementById('cursos').scrollIntoView({behavior: 'smooth'})">Ver Cursos Disponibles</button>
+                </div>
+                <div class="hero-visual">
+                    <div class="chess-board" id="tablero-hero">
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="introduccion">
+            <h2>¿Por qué Aprender Ajedrez?</h2>
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h3>El Ajedrez es un Arte y una Ciencia</h3>
+                    <p>El ajedrez no es solo un juego, es un viaje hacia el desarrollo personal. Mejora tu pensamiento estratégico, concentración y toma de decisiones.</p>
+                </div>
+                <div class="intro-image">♛</div>
+            </div>
+        </section>
+
+        <section id="tecnicas">
+            <h2>Técnicas Fundamentales</h2>
+            <div class="tecnicas-grid">
+                <div class="tech-card">
+                    <div class="icon">🎯</div>
+                    <h3>Control del Centro</h3>
+                    <p>Aprende a dominar las casillas centrales del tablero.</p>
+                </div>
+                <div class="tech-card">
+                    <div class="icon">♟️</div>
+                    <h3>Estructura de Peones</h3>
+                    <p>Entiende la importancia de la estructura de tus peones.</p>
+                </div>
+                <div class="tech-card">
+                    <div class="icon">⚔️</div>
+                    <h3>Tácticas Ganadoras</h3>
+                    <p>Domina los patrones tácticos básicos y avanzados.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="cursos">
+            <h2>Cursos Próximos y Disponibles</h2>
+            <p style="text-align: center; margin-bottom: 3rem; color: #666;">Descubre nuestros programas de formación e inscríbete para empezar tu camino.</p>
+            
+            <div class="cursos-grid-visual" id="contenedor-cursos-publico">
+                <div class="loading-text">Cargando cursos disponibles...</div>
+            </div>
+        </section>
+    </main>
+
+    <main id="vista-admin" style="display: none;">
+        <section class="admin-dashboard">
+            <div class="admin-header">
+                <h2>Gestión de Cursos</h2>
+                <button class="cta-button" onclick="abrirModalCurso()">
+                    <i class="fas fa-plus"></i> Crear Nuevo Curso
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre del Curso</th>
+                            <th>Nivel</th>
+                            <th>Fecha Inicio</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-cursos-admin">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ChessAcademy. Plataforma de Administración.</p>
+        </div>
+    </footer>
+
+    <div id="modal-curso" class="modal-overlay">
+        <div class="modal-content admin-modal">
+            <span class="close-modal" onclick="cerrarModalCurso()">&times;</span>
+            <h3 id="modal-titulo">Crear Nuevo Curso</h3>
+            
+            <form id="form-curso" onsubmit="guardarCurso(event)">
+                <input type="hidden" id="curso_id" name="curso_id">
+                
+                <div class="form-group">
+                    <label for="curso_nombre">Nombre del Curso</label>
+                    <input type="text" id="curso_nombre" required placeholder="Ej. Tácticas Avanzadas">
+                </div>
+                
+                <div class="form-group">
+                    <label for="curso_descripcion">Descripción corta</label>
+                    <textarea id="curso_descripcion" rows="3" required placeholder="Describe lo que aprenderán..."></textarea>
+                </div>
+                
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label for="curso_nivel">Nivel</label>
+                        <select id="curso_nivel" required>
+                            <option value="Principiante">Principiante</option>
+                            <option value="Intermedio">Intermedio</option>
+                            <option value="Avanzado">Avanzado</option>
+                            <option value="Experto">Experto</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="curso_fecha">Fecha de Inicio</label>
+                        <input type="date" id="curso_fecha" required>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label for="curso_estado">Estado</label>
+                        <select id="curso_estado" required>
+                            <option value="Inscripciones Abiertas">Inscripciones Abiertas</option>
+                            <option value="En Curso">En Curso</option>
+                            <option value="Finalizado">Finalizado</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="curso_imagen">Color/Tema (Para la tarjeta)</label>
+                        <select id="curso_imagen" required>
+                            <option value="theme-blue">Azul (Estándar)</option>
+                            <option value="theme-green">Verde (Inglés/Tácticas)</option>
+                            <option value="theme-dark">Oscuro (Avanzado)</option>
+                            <option value="theme-gold">Dorado (Premium)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="mensaje-admin" class="mensaje-form"></div>
+
+                <button type="submit" id="btn-guardar-curso" class="cta-button" style="width: 100%; margin-top: 1.5rem;">
+                    Guardar Curso
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

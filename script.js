@@ -56,7 +56,7 @@ let cursosDB = [
 // ========================================
 // 3. MÉTODOS DE LA API (CONEXIÓN REAL A FASTAPI)
 // ========================================
-const API_URL = "http://3.139.96.62:8000/api/cursos";
+const API_URL = "http://100.53.57.10:8000/api/cursos";
 
 // GET: Obtener todos los cursos
 async function apiGetCursos() {
